@@ -5,9 +5,31 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Life Dashboard</title>
+    <link rel="stylesheet" href="styles/main.css" />
   </head>
   <body>
-    <p id="demo"></p>
+    <main>
+      <div class="generalInformation">
+        <div class="generalLeft">
+          <h2>General information</h2>
+          <p class="weatherStats" id="temperature"><span class='infoName'>Temperature:<span></span></p>
+          <p class="weatherStats" id="weather"><span class='infoName'>Weather:<span></p>
+          <p class="weatherStats" id="pressure"><span class='infoName'>Pressure:<span></p>
+          <p class="weatherStats" id="humidity"><span class='infoName'>Humidity:<span></span></p>
+          <p class="weatherStats" id="sunrise"><span class='infoName'>Sunrise:<span></span></p>
+          <p class="weatherStats" id="sunset"><span class='infoName'>Sunset:<span></span></p>
+        </div>
+        <div class="generalRight">
+          <p id="time"></p>
+          <p id="date"></p>
+          <div id="space"></div>
+          <p id="city"></p>
+        </div>
+      </div>
+      <div class="calendar"><div id="calendar"></div></div>
+    </main>
+    <section class="left"></section>
+    <section class="right"></section>
     <script type="text/javascript" src="resources/countries.json"></script>
     <script type="text/javascript" src="script/script.js"></script>
   </body>

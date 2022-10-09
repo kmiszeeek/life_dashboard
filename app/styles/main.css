@@ -1,0 +1,131 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: inter;
+}
+
+body {
+  background-color: #f5efe6;
+}
+
+main {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 2%;
+  margin-left: 2%;
+  margin-right: 2%;
+}
+
+.generalInformation {
+  width: 55%;
+  height: 500px;
+  padding: 1%;
+  display: flex;
+  justify-content: center;
+  background: #ffffff;
+  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 5px;
+  cursor: default;
+}
+
+.generalInformation .generalRight {
+  display: flex;
+  flex-direction: column;
+  width: 42%;
+  margin-bottom: 2.2%;
+}
+
+.generalInformation .generalRight #time {
+  font-weight: 700;
+  font-size: 120px;
+  text-align: center;
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.generalInformation .generalRight #date {
+  font-weight: 600;
+  font-size: 38px;
+  text-align: center;
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.generalInformation .generalRight #city {
+  font-weight: 600;
+  font-size: 40px;
+  text-align: center;
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.generalInformation .generalLeft {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 53%;
+  margin-top: 2%;
+  margin-bottom: 2%;
+}
+
+.generalInformation .generalLeft h2 {
+  font-weight: 600;
+  font-size: 50px;
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.generalInformation .generalLeft .weatherStats {
+  font-size: 32px;
+}
+
+.infoName {
+  font-weight: 600;
+}
+
+.calendar {
+  width: 40%;
+  height: 500px;
+  background: #ffffff;
+  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 5px;
+  cursor: default;
+}
+
+#calendar {
+  height: 89%;
+  display: grid;
+  margin: 3%;
+  grid-template-columns: repeat(7, 1fr);
+}
+
+sup {
+  font-size: 20px;
+}
+
+#space {
+  flex-grow: 1;
+}
+
+.day {
+  font-size: 38px;
+  text-align: center;
+  margin: auto;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.day:hover {
+  color: #ffb121;
+}
+
+.dayName {
+  font-size: 42px;
+  text-align: center;
+  margin: auto;
+  font-weight: 700;
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.sunday {
+  color: #ff0000;
+}
