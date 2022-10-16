@@ -12,24 +12,73 @@
       <div class="generalInformation">
         <div class="generalLeft">
           <h2>General information</h2>
-          <p class="weatherStats" id="temperature"><span class='infoName'>Temperature:<span></span></p>
-          <p class="weatherStats" id="weather"><span class='infoName'>Weather:<span></p>
-          <p class="weatherStats" id="pressure"><span class='infoName'>Pressure:<span></p>
-          <p class="weatherStats" id="humidity"><span class='infoName'>Humidity:<span></span></p>
-          <p class="weatherStats" id="sunrise"><span class='infoName'>Sunrise:<span></span></p>
-          <p class="weatherStats" id="sunset"><span class='infoName'>Sunset:<span></span></p>
+          <p class="weatherStats" id="temperature"></p>
+          <p class="weatherStats" id="weather"></p>
+          <p class="weatherStats" id="pressure"></p>
+          <p class="weatherStats" id="humidity"></p>
+          <p class="weatherStats" id="sunrise"></p>
+          <p class="weatherStats" id="sunset"></p>
         </div>
         <div class="generalRight">
           <p id="time"></p>
           <p id="date"></p>
           <div id="space"></div>
-          <p id="city"></p>
+          <div id="city">
+            <select name="cities" id="citiesSelect">
+              <option value="Warszawa">Warszawa</option>
+              <option value="Katowice">Katowice</option>
+              <option value="Gdańsk">Gdańsk</option>
+              <option value="Rzeszów">Rzeszów</option>
+              <option value="Szczecin">Szczecin</option>
+              <option value="Gliwice" selected="selected">Gliwice</option>
+            </select>
+          </div>
         </div>
       </div>
       <div class="calendar"><div id="calendar"></div></div>
     </main>
-    <section class="left"></section>
-    <section class="right"></section>
+    <div class="container">
+      <section class="left">
+        <div class="tasks">
+          <nav>
+            <h3>Today's tasks</h3>
+            <p class="plus">+</p>
+          </nav>
+          <div class="task">
+            <p>homework</p>
+            <div class="taskOptions">
+              <span class="exclamation">!</span>
+              <input
+                type="checkbox"
+                class="checkbox"
+                id="checkbox"
+                name="checkbox"
+              />
+            </div>
+          </div>
+          <div class="task">
+            <p>throw out rubbish</p>
+            <div class="taskOptions">
+              <span class="exclamation">!</span>
+              <input
+                type="checkbox"
+                class="checkbox"
+                id="checkbox"
+                name="checkbox"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="right">
+        <div class="reminders">
+          <nav>
+            <h3>Reminders</h3>
+            <p class="plus">+</p>
+          </nav>
+        </div>
+      </section>
+    </div>
     <script type="text/javascript" src="resources/countries.json"></script>
     <script type="text/javascript" src="script/script.js"></script>
   </body>
