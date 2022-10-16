@@ -1,8 +1,9 @@
-function getLocation() {
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(getWeather);
-  }
-}
+// function getLocation() {
+//   if (navigator.geolocation) {
+//     return navigator.geolocation.getCurrentPosition(getCoords);
+//     geolocationPermission = true;
+//   }
+// }
 
 function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
@@ -18,65 +19,88 @@ function convertFromTimestamp(timestamp) {
   return result;
 }
 
-getLocation();
+// getLocation();
 
-let weatherData;
 
-async function getWeather(position) {
-  console.log(position.coords.latitude);
-  console.log(position.coords.longitude);
+
+let basicCities = [
+  ['Warszawa', 52.2297, 21.0122],
+  ['Katowice', 50.2649, 19.0238],
+  ['Gdańsk', 54.3520, 18.6466],
+  ['Rzeszów', 50.0412, 21.9991],
+  ['Szczecin', 53.4285, 14.5528],
+  ['Gliwice', 50.2945, 18.6714],
+];
+
+let latitude, longitude;
+
+for (let i = 0; i < basicCities.length; i++) {
+  if (document.getElementById("citiesSelect").value == basicCities[i][0]) {
+    latitude = basicCities[i][1];
+    longitude = basicCities[i][2];
+  }
+}
+
+getWeather(latitude, longitude);
+
+document.getElementById("citiesSelect").addEventListener("change", () => {
+  for (let i = 0; i < basicCities.length; i++) {
+    if (document.getElementById("citiesSelect").value == basicCities[i][0]) {
+      latitude = basicCities[i][1];
+      longitude = basicCities[i][2];
+    }
+  }
+  getWeather(latitude, longitude);
+})
+//document.getElementById("citiesSelect").addEventListener("onchange", getWeather(latitude, longitude));
+
+async function getWeather(latitude, longitude) {
+  console.log(latitude);
+  console.log(longitude);
 
   const result = await fetch(
-    `https://api.openweathermap.org/data/2.5/forecast?lat=${position.coords.latitude}&lon=${position.coords.longitude}&appid=56e1b69633d0faa92c0b2d5121e0c2b1&units=metric&mode=json`
+    `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=56e1b69633d0faa92c0b2d5121e0c2b1&units=metric&mode=json`
   );
 
   const data = await result.json();
-  const countryName = await convertFromCountryShortcut(data.city.country);
 
-  // console.log(data.city.name + ", " + countryName);
-  // console.log(convertFromTimestamp(data.city.sunrise));
-  // console.log(convertFromTimestamp(data.city.sunset));
-  // console.log(data.list[0].main.temp + "°C");
-  // console.log(data.list[0].main.feels_like + "°C");
-  // console.log(data.list[0].main.pressure + " hPa");
-  // console.log(data.list[0].main.humidity + "%");
-  // console.log(data.list[0].weather[0].main);
+  //const countryName = await convertFromCountryShortcut(data.city.country);
 
-  document.getElementById("temperature").innerHTML +=
-    " " + data.list[0].main.temp + "°C";
+  document.getElementById("temperature").innerHTML =
+    "<span class='infoName'>Temperature:</span> " + data.list[0].main.temp + "°C";
 
-  document.getElementById("weather").innerHTML +=
-    " " + capitalizeFirstLetter(data.list[0].weather[0].description);
+  document.getElementById("weather").innerHTML =
+    "<span class='infoName'>Weather:</span> " + capitalizeFirstLetter(data.list[0].weather[0].description);
 
-  document.getElementById("pressure").innerHTML +=
-    " " + data.list[0].main.pressure + " hPa";
+  document.getElementById("pressure").innerHTML =
+    "<span class='infoName'>Pressure:</span> " + data.list[0].main.pressure + " hPa";
 
-  document.getElementById("humidity").innerHTML +=
-    " " + data.list[0].main.humidity + "%";
+  document.getElementById("humidity").innerHTML =
+    "<span class='infoName'>Humidity:</span> " + data.list[0].main.humidity + "%";
 
   // document.getElementById("airstats").innerHTML =
   //   "<span class='infoName'>Wind speed:<span> " +
   //   data.list[0].wind.speed +
   //   " m/s";
 
-  document.getElementById("sunrise").innerHTML +=
-    " " + convertFromTimestamp(data.city.sunrise);
+  document.getElementById("sunrise").innerHTML =
+    "<span class='infoName'>Sunrise:</span> " + convertFromTimestamp(data.city.sunrise);
 
-  document.getElementById("sunset").innerHTML +=
-    " " + convertFromTimestamp(data.city.sunset);
+  document.getElementById("sunset").innerHTML =
+    "<span class='infoName'>Sunset:</span> " + convertFromTimestamp(data.city.sunset);
 
-  document.getElementById("city").innerHTML =
-    data.city.name + ", " + countryName;
+  console.log(data.city.name);
 }
 
-async function convertFromCountryShortcut(shortcut) {
-  const result = await fetch("./resources/countries.json");
-  const data = await result.json();
 
-  for (let i = 0; i < data.length; i++) {
-    if (data[i].Code == shortcut) return data[i].Name;
-  }
-}
+// async function convertFromCountryShortcut(shortcut) {
+//   const result = await fetch("./resources/countries.json");
+//   const data = await result.json();
+
+//   for (let i = 0; i < data.length; i++) {
+//     if (data[i].Code == shortcut) return data[i].Name;
+//   }
+// }
 
 function getDateAndTime() {
   let time = new Date();
@@ -126,7 +150,7 @@ function getDateAndTime() {
   document.getElementById("date").innerHTML = day + " " + month + " " + year;
 }
 
-setInterval(getDateAndTime, 10);
+setInterval(getDateAndTime, 1000);
 
 function displayCalendar() {
   let time = new Date();
