@@ -33,14 +33,14 @@ async function getWeather(position) {
   const data = await result.json();
   const countryName = await convertFromCountryShortcut(data.city.country);
 
-  console.log(data.city.name + ", " + countryName);
-  console.log(convertFromTimestamp(data.city.sunrise));
-  console.log(convertFromTimestamp(data.city.sunset));
-  console.log(data.list[0].main.temp + "°C");
-  console.log(data.list[0].main.feels_like + "°C");
-  console.log(data.list[0].main.pressure + " hPa");
-  console.log(data.list[0].main.humidity + "%");
-  console.log(data.list[0].weather[0].main);
+  // console.log(data.city.name + ", " + countryName);
+  // console.log(convertFromTimestamp(data.city.sunrise));
+  // console.log(convertFromTimestamp(data.city.sunset));
+  // console.log(data.list[0].main.temp + "°C");
+  // console.log(data.list[0].main.feels_like + "°C");
+  // console.log(data.list[0].main.pressure + " hPa");
+  // console.log(data.list[0].main.humidity + "%");
+  // console.log(data.list[0].weather[0].main);
 
   document.getElementById("temperature").innerHTML +=
     " " + data.list[0].main.temp + "°C";
@@ -131,6 +131,7 @@ setInterval(getDateAndTime, 10);
 function displayCalendar() {
   let time = new Date();
   let month = time.getMonth();
+  let temp = time.getDate();
   let numberOfDays;
 
   if (month == 1) {
@@ -140,11 +141,8 @@ function displayCalendar() {
   } else {
     numberOfDays = 31;
   }
-
   month++;
   firstDay = new Date(time.getFullYear() + "-" + month + "-01").getDay();
-  console.log(firstDay);
-
   // document.getElementById("calendar").style.gridTemplateColumns = "grid-template-rows: repeat(1, 1fr);";
 
   const calendar = document.getElementById("calendar");
@@ -155,7 +153,9 @@ function displayCalendar() {
   }
 
   for (let day = 1; day <= numberOfDays; day++) {
-    if ((day + firstDay - 1) % 7 == 0)
+    if (day == temp)
+      calendar.innerHTML += `<div class="day today">${day}</div>`;
+    else if ((day + firstDay - 1) % 7 == 0)
       calendar.innerHTML += `<div class="day sunday">${day}</div>`;
     else calendar.innerHTML += `<div class="day">${day}</div>`;
   }
