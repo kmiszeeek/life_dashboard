@@ -185,7 +185,6 @@ select {
   flex-direction: column;
 }
 .reminders {
-  height: 250px;
   width: 100%;
   padding: 1.5% 2.5% 1.5% 2.5%;
   background-color: #fff;
@@ -370,4 +369,14 @@ label {
 
 .trash {
   cursor: pointer;
+}
+
+#textArea {
+  font-size: 24px;
+  text-align: left;
+  resize: none;
+  overflow: hidden;
+  min-height: 100px;
+  padding: 1%;
+  padding-bottom: 2%;
 }

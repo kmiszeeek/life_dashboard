@@ -11,6 +11,7 @@ function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
+document.getElementById("textArea").value = localStorage.getItem('note123456789');
 
 function convertFromTimestamp(timestamp) {
   let tmp = new Date(timestamp * 1000);
@@ -39,7 +40,7 @@ async function getWeather(city) {
   );
 
   const data = await result.json();
-  
+
   document.getElementById("countryName").innerHTML = await convertFromCountryShortcut(data.sys.country);
 
   document.getElementById("temperature").innerHTML =
@@ -172,7 +173,7 @@ if (window.localStorage.length == 0) {
   tasksList.innerHTML += `<p class="free">You are free today!</p>`;
 } else {
   for (let i = 0; i < localStorage.length; i++) {
-    if (localStorage.getItem(localStorage.key(i)) == "true") {
+    if (localStorage.getItem(localStorage.key(i)) == "true" && localStorage.key(i) != "note123456789") {
       tasksList.innerHTML += `
       <div class="task">
         <p>${localStorage.key(i)}</p>
@@ -187,7 +188,7 @@ if (window.localStorage.length == 0) {
           <img src="./resources/trash.png" width="26px" class="trash" name="${localStorage.key(i)}" id="trashTask">
         </div>
       </div>`
-    } else {
+    } else if (localStorage.key(i) != "note123456789") {
       tasksList.innerHTML += `
       <div class="task">
         <p>${localStorage.key(i)}</p>
@@ -209,6 +210,15 @@ if (window.localStorage.length == 0) {
 document.getElementById("trashTask").addEventListener("click", () => {
   localStorage.removeItem(document.getElementById("trashTask").name);
   window.location.href = window.location.href;
+});
+
+function auto_grow(element) {
+  element.style.height = "5px";
+  element.style.height = (element.scrollHeight) + "px";
+}
+
+document.getElementById("textArea").addEventListener("change", () => {
+  localStorage.setItem("note123456789", document.getElementById("textArea").value);
 });
 
 
