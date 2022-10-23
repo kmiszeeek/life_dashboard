@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap");
 
 * {
   margin: 0;
@@ -56,7 +56,9 @@ main {
   font-weight: 600;
   font-size: 40px;
   text-align: center;
-  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+#countryName {
+  font-size: 45px;
 }
 
 .generalInformation .generalLeft {
@@ -174,7 +176,6 @@ select {
 }
 
 .tasks {
-  height: 200px;
   width: 100%;
   padding: 1.5% 2.5% 1.5% 2.5%;
   background-color: #fff;
@@ -219,7 +220,7 @@ select {
 }
 
 .taskOptions {
-  width: 50px;
+  width: 90px;
   display: flex;
   justify-content: space-between;
   justify-items: center;
@@ -230,4 +231,143 @@ select {
 .exclamation {
   font-weight: 800;
   color: #ff0000;
+}
+
+.exclamationFalse {
+  visibility: hidden;
+  opacity: 0;
+  font-weight: 800;
+  color: #ff0000;
+}
+
+.plus {
+  cursor: pointer;
+  text-decoration: none;
+  color: #000;
+  font-size: 35px;
+  font-weight: 700;
+}
+
+#citiesSelect {
+  font-family: inter;
+  font-weight: 700;
+  font-size: 45px;
+  width: 80%;
+  text-align: center;
+  outline: 0;
+  border-width: 0 0 2px;
+  border-color: rgb(163, 163, 163);
+  transition: 0.3s;
+}
+#citiesSelect:focus {
+  border-color: rgb(0, 0, 0);
+}
+
+/* -------------- */
+
+.promptOverlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(121, 121, 121, 0.85);
+  transition: opacity 500ms;
+  visibility: hidden;
+  opacity: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.promptOverlay:target {
+  visibility: visible;
+  opacity: 1;
+}
+
+.promptTasks {
+  background: #f5efe6;
+  font-family: inter;
+  width: 800px;
+  height: 300px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  padding: 1%;
+  border-radius: 5px;
+}
+
+.promptTasks > nav {
+  display: flex;
+  justify-content: space-between;
+  font-weight: lighter;
+  font-size: 24px;
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  margin-bottom: 3%;
+}
+
+.close {
+  color: #000;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 40px;
+}
+
+label {
+  font-family: "Lato";
+  font-weight: 600;
+  font-size: 24px;
+}
+
+.promptTaskForm {
+  margin-left: 2%;
+  margin-right: 2%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.promptTaskForm > #taskName {
+  height: 45px;
+  padding-left: 2%;
+  font-size: 18px;
+  border: 1px solid #c1c1c1;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 5px;
+}
+
+.promptTaskForm > div > #checkboxTask {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  margin-left: 3px;
+}
+
+.checkboxFlex {
+  display: flex;
+}
+.checkboxFlex > p {
+  margin-left: 10px;
+}
+
+.formSubmit {
+  align-self: flex-end;
+  font-size: 18px;
+  width: 180px;
+  height: 30px;
+  background: #ffffff;
+  border: 1px solid #c1c1c1;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.free {
+  width: 100%;
+  margin-top: 2%;
+  margin-bottom: 2%;
+  text-align: center;
+  font-size: 30px;
+  font-weight: 500;
+}
+
+.trash {
+  cursor: pointer;
 }

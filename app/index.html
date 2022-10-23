@@ -24,14 +24,9 @@
           <p id="date"></p>
           <div id="space"></div>
           <div id="city">
-            <select name="cities" id="citiesSelect">
-              <option value="Warszawa">Warszawa</option>
-              <option value="Katowice">Katowice</option>
-              <option value="Gdańsk">Gdańsk</option>
-              <option value="Rzeszów">Rzeszów</option>
-              <option value="Szczecin">Szczecin</option>
-              <option value="Gliwice" selected="selected">Gliwice</option>
-            </select>
+            <input type="text" name="cities" id="citiesSelect" value="Warszawa">
+            </input><br>
+            <p id="countryName"></p>
           </div>
         </div>
       </div>
@@ -39,45 +34,47 @@
     </main>
     <div class="container">
       <section class="left">
-        <div class="tasks">
+        <div class="tasks" id="tasks">
           <nav>
             <h3>Today's tasks</h3>
-            <p class="plus">+</p>
+            <a href="#promptTaskOverlay" class="plus">+</a>
           </nav>
-          <div class="task">
-            <p>homework</p>
-            <div class="taskOptions">
-              <span class="exclamation">!</span>
-              <input
-                type="checkbox"
-                class="checkbox"
-                id="checkbox"
-                name="checkbox"
-              />
-            </div>
-          </div>
-          <div class="task">
-            <p>throw out rubbish</p>
-            <div class="taskOptions">
-              <span class="exclamation">!</span>
-              <input
-                type="checkbox"
-                class="checkbox"
-                id="checkbox"
-                name="checkbox"
-              />
-            </div>
-          </div>
         </div>
       </section>
       <section class="right">
         <div class="reminders">
           <nav>
-            <h3>Reminders</h3>
+            <h3>Quick notes
+            </h3>
             <p class="plus">+</p>
           </nav>
         </div>
       </section>
+    </div>
+    <div class="promptOverlay" id="promptTaskOverlay">
+      <div class="promptTasks">
+        <nav>
+        <h2>Add new task</h2>
+        <a href="#" class="close">&times;</a>
+      </nav>
+        <div class="content">
+          <div class="container2">
+            <form class="promptTaskForm">
+              <label for="taskName">Task name:</label><br>
+              <input type="text" placeholder="your task name" name="taskName" id="taskName"><br>
+              <div class="checkboxFlex"><input
+                  type="checkbox"
+                  class="checkboxTask"
+                  id="checkboxTask"
+                  name="checkboxTask"
+                />
+                <p>task is important</p></div>
+                <br>
+              <input type="submit" id="submitTask" class="formSubmit" value="Add new task">
+            </form>
+          </div>
+        </div>
+      </div>
     </div>
     <script type="text/javascript" src="resources/countries.json"></script>
     <script type="text/javascript" src="script/script.js"></script>

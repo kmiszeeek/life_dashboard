@@ -4,10 +4,13 @@
 //     geolocationPermission = true;
 //   }
 // }
+// getLocation();
 
 function capitalizeFirstLetter(string) {
+  string = string.toLowerCase();
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
+
 
 function convertFromTimestamp(timestamp) {
   let tmp = new Date(timestamp * 1000);
@@ -19,88 +22,54 @@ function convertFromTimestamp(timestamp) {
   return result;
 }
 
-// getLocation();
+let city = document.getElementById("citiesSelect").value;
 
-
-
-let basicCities = [
-  ['Warszawa', 52.2297, 21.0122],
-  ['Katowice', 50.2649, 19.0238],
-  ['Gdańsk', 54.3520, 18.6466],
-  ['Rzeszów', 50.0412, 21.9991],
-  ['Szczecin', 53.4285, 14.5528],
-  ['Gliwice', 50.2945, 18.6714],
-];
-
-let latitude, longitude;
-
-for (let i = 0; i < basicCities.length; i++) {
-  if (document.getElementById("citiesSelect").value == basicCities[i][0]) {
-    latitude = basicCities[i][1];
-    longitude = basicCities[i][2];
-  }
-}
-
-getWeather(latitude, longitude);
 
 document.getElementById("citiesSelect").addEventListener("change", () => {
-  for (let i = 0; i < basicCities.length; i++) {
-    if (document.getElementById("citiesSelect").value == basicCities[i][0]) {
-      latitude = basicCities[i][1];
-      longitude = basicCities[i][2];
-    }
-  }
-  getWeather(latitude, longitude);
-})
-//document.getElementById("citiesSelect").addEventListener("onchange", getWeather(latitude, longitude));
 
-async function getWeather(latitude, longitude) {
-  console.log(latitude);
-  console.log(longitude);
+  city = document.getElementById("citiesSelect").value;
+  document.getElementById("citiesSelect").value = capitalizeFirstLetter(city);
+  getWeather(city);
+});
+
+async function getWeather(city) {
 
   const result = await fetch(
-    `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=56e1b69633d0faa92c0b2d5121e0c2b1&units=metric&mode=json`
+    `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=56e1b69633d0faa92c0b2d5121e0c2b1&units=metric&mode=json`
   );
 
   const data = await result.json();
-
-  //const countryName = await convertFromCountryShortcut(data.city.country);
+  
+  document.getElementById("countryName").innerHTML = await convertFromCountryShortcut(data.sys.country);
 
   document.getElementById("temperature").innerHTML =
-    "<span class='infoName'>Temperature:</span> " + data.list[0].main.temp + "°C";
+    "<span class='infoName'>Temperature:</span> " + data.main.temp + "°C";
 
   document.getElementById("weather").innerHTML =
-    "<span class='infoName'>Weather:</span> " + capitalizeFirstLetter(data.list[0].weather[0].description);
+    "<span class='infoName'>Weather:</span> " + capitalizeFirstLetter(data.weather[0].description);
 
   document.getElementById("pressure").innerHTML =
-    "<span class='infoName'>Pressure:</span> " + data.list[0].main.pressure + " hPa";
+    "<span class='infoName'>Pressure:</span> " + data.main.pressure + " hPa";
 
   document.getElementById("humidity").innerHTML =
-    "<span class='infoName'>Humidity:</span> " + data.list[0].main.humidity + "%";
-
-  // document.getElementById("airstats").innerHTML =
-  //   "<span class='infoName'>Wind speed:<span> " +
-  //   data.list[0].wind.speed +
-  //   " m/s";
+    "<span class='infoName'>Humidity:</span> " + data.main.humidity + "%";
 
   document.getElementById("sunrise").innerHTML =
-    "<span class='infoName'>Sunrise:</span> " + convertFromTimestamp(data.city.sunrise);
+    "<span class='infoName'>Sunrise:</span> " + convertFromTimestamp(data.sys.sunrise);
 
   document.getElementById("sunset").innerHTML =
-    "<span class='infoName'>Sunset:</span> " + convertFromTimestamp(data.city.sunset);
-
-  console.log(data.city.name);
+    "<span class='infoName'>Sunset:</span> " + convertFromTimestamp(data.sys.sunset);
 }
 
 
-// async function convertFromCountryShortcut(shortcut) {
-//   const result = await fetch("./resources/countries.json");
-//   const data = await result.json();
+async function convertFromCountryShortcut(shortcut) {
+  const result = await fetch("./resources/countries.json");
+  const data = await result.json();
 
-//   for (let i = 0; i < data.length; i++) {
-//     if (data[i].Code == shortcut) return data[i].Name;
-//   }
-// }
+  for (let i = 0; i < data.length; i++) {
+    if (data[i].Code == shortcut) return data[i].Name;
+  }
+}
 
 function getDateAndTime() {
   let time = new Date();
@@ -150,24 +119,21 @@ function getDateAndTime() {
   document.getElementById("date").innerHTML = day + " " + month + " " + year;
 }
 
-setInterval(getDateAndTime, 1000);
-
 function displayCalendar() {
   let time = new Date();
   let month = time.getMonth();
   let temp = time.getDate();
   let numberOfDays;
 
-  if (month == 1) {
+  if (month == 1)
     numberOfDays = 28;
-  } else if (month % 2 == 0) {
+  else if (month % 2 == 0)
     numberOfDays = 30;
-  } else {
+  else
     numberOfDays = 31;
-  }
+
   month++;
   firstDay = new Date(time.getFullYear() + "-" + month + "-01").getDay();
-  // document.getElementById("calendar").style.gridTemplateColumns = "grid-template-rows: repeat(1, 1fr);";
 
   const calendar = document.getElementById("calendar");
   calendar.innerHTML +=
@@ -185,7 +151,67 @@ function displayCalendar() {
   }
 }
 
+getWeather(city);
+setInterval(getDateAndTime, 10);
 displayCalendar();
+
+document.getElementById("submitTask").addEventListener("click", () => {
+  document.getElementById("promptTaskOverlay").style.visibility = "hidden";
+  document.getElementById("promptTaskOverlay").style.opacity = 0;
+
+  window.history.pushState("", "", '/app/index.html');
+  localStorage.setItem(document.getElementById("taskName").value, document.getElementById("checkboxTask").checked ? "true" : "false");
+});
+
+
+let tasks = JSON.stringify(localStorage);
+
+let tasksList = document.getElementById("tasks");
+
+if (window.localStorage.length == 0) {
+  tasksList.innerHTML += `<p class="free">You are free today!</p>`;
+} else {
+  for (let i = 0; i < localStorage.length; i++) {
+    if (localStorage.getItem(localStorage.key(i)) == "true") {
+      tasksList.innerHTML += `
+      <div class="task">
+        <p>${localStorage.key(i)}</p>
+        <div class="taskOptions">
+          <span class="exclamation">!</span>
+          <input
+            type="checkbox"
+            class="checkbox"
+            id="checkbox"
+            name="checkbox"
+          />
+          <img src="./resources/trash.png" width="26px" class="trash" name="${localStorage.key(i)}" id="trashTask">
+        </div>
+      </div>`
+    } else {
+      tasksList.innerHTML += `
+      <div class="task">
+        <p>${localStorage.key(i)}</p>
+        <div class="taskOptions">
+          <span class="exclamationFalse">!</span>
+          <input
+            type="checkbox"
+            class="checkbox"
+            id="checkbox"
+            name="checkbox"
+          />
+          <img src="./resources/trash.png" width="26px" class="trash" name="${localStorage.key(i)}" id="trashTask">
+        </div>
+      </div>`
+    }
+  }
+}
+
+document.getElementById("trashTask").addEventListener("click", () => {
+  localStorage.removeItem(document.getElementById("trashTask").name);
+  window.location.href = window.location.href;
+});
+
+
 // const cats = [
 //   {id : "1", name : "jon doe"},
 //   {id : "2", name : "john deere"},
