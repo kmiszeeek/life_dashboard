@@ -50,11 +50,12 @@ async function getWeather(city) {
     `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=56e1b69633d0faa92c0b2d5121e0c2b1&units=metric&mode=json`
   );
 
-  const forecast = await fetch(
-    `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=56e1b69633d0faa92c0b2d5121e0c2b1&units=metric&mode=json`
-  );
-
+  // const forecast = await fetch(
+  //   `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=56e1b69633d0faa92c0b2d5121e0c2b1&units=metric&mode=json`
+  // );
   const data = await result.json();
+
+  document.getElementById("citiesSelect").value = data.name;
   document.getElementById("countryName").innerHTML = await convertFromCountryShortcut(data.sys.country);
   document.getElementById("temperature").innerHTML =
     "<span class='infoName'>Temperature:</span> " + data.main.temp + "°C";
@@ -254,11 +255,8 @@ let tempYear = temp.getFullYear();
 let tempMonth = temp.getMonth();
 let tempDay = temp.getDate();
 
-console.log(new Date(localStorage.getItem(localStorage.key(3))));
-console.log(new Date(tempYear, tempMonth, tempDay, 2));
 
 if (checkReminders == false) {
-  console.log("trashReminder");
   remindersList.innerHTML += `<p class="free">You have no reminders!</p>`;
 } else {
   for (let i = 0; i < localStorage.length; i++) {
@@ -269,7 +267,6 @@ if (checkReminders == false) {
       if (temp.getFullYear() == temp2.getFullYear() && temp.getMonth() == temp2.getMonth() && temp.getDate() == temp2.getDate()) {
         sameDay = true;
       }
-      console.log(sameDay);
       if (new Date(localStorage.getItem(localStorage.key(i))) < new Date() && !sameDay) {
         remindersList.innerHTML += `
         <div class="task">
