@@ -6,19 +6,23 @@
 // }
 // getLocation();
 
+/**
+ * Function capitilazing first letter of string.
+ * @param {string} string string
+ * @returns {string} capitalized string
+ */
 function capitalizeFirstLetter(string) {
   string = string.toLowerCase();
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
-function deleteSpecialChars(string) {
-  for (let i = 0; i < string.length(); i++) {
-
-  }
-}
-
 document.getElementById("textArea").value = localStorage.getItem('note123456789');
 
+/**
+ * Function that converts date from timestamp format to normal date.
+ * @param {string} timestamp timestamp
+ * @returns {string} converted date
+ */
 function convertFromTimestamp(timestamp) {
   let tmp = new Date(timestamp * 1000);
   let hours = tmp.getHours();
@@ -31,43 +35,40 @@ function convertFromTimestamp(timestamp) {
 
 let city = document.getElementById("citiesSelect").value;
 
-
 document.getElementById("citiesSelect").addEventListener("change", () => {
-
   city = document.getElementById("citiesSelect").value;
   document.getElementById("citiesSelect").value = capitalizeFirstLetter(city);
   getWeather(city);
 });
 
+/**
+ * Main application function that displays weather for specific city
+ * @param {string} city city name
+ */
 async function getWeather(city) {
-
   const result = await fetch(
     `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=56e1b69633d0faa92c0b2d5121e0c2b1&units=metric&mode=json`
   );
 
+  const forecast = await fetch(
+    `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=56e1b69633d0faa92c0b2d5121e0c2b1&units=metric&mode=json`
+  );
+
   const data = await result.json();
-
   document.getElementById("countryName").innerHTML = await convertFromCountryShortcut(data.sys.country);
-
   document.getElementById("temperature").innerHTML =
     "<span class='infoName'>Temperature:</span> " + data.main.temp + "°C";
-
   document.getElementById("weather").innerHTML =
     "<span class='infoName'>Weather:</span> " + capitalizeFirstLetter(data.weather[0].description);
-
   document.getElementById("pressure").innerHTML =
     "<span class='infoName'>Pressure:</span> " + data.main.pressure + " hPa";
-
   document.getElementById("humidity").innerHTML =
     "<span class='infoName'>Humidity:</span> " + data.main.humidity + "%";
-
   document.getElementById("sunrise").innerHTML =
     "<span class='infoName'>Sunrise:</span> " + convertFromTimestamp(data.sys.sunrise);
-
   document.getElementById("sunset").innerHTML =
     "<span class='infoName'>Sunset:</span> " + convertFromTimestamp(data.sys.sunset);
 }
-
 
 async function convertFromCountryShortcut(shortcut) {
   const result = await fetch("./resources/countries.json");
@@ -78,6 +79,9 @@ async function convertFromCountryShortcut(shortcut) {
   }
 }
 
+/**
+ * Function that display actual date and time.
+ */
 function getDateAndTime() {
   let time = new Date();
   let hours = time.getHours();
@@ -125,7 +129,9 @@ function getDateAndTime() {
   document.getElementById("time").innerHTML = hours + ":" + minutes;
   document.getElementById("date").innerHTML = day + " " + month + " " + year;
 }
-
+/**
+ * Function that calendar of current month on site.
+ */
 function displayCalendar() {
   let time = new Date();
   let month = time.getMonth();
@@ -308,6 +314,10 @@ document.getElementById("trashReminder").addEventListener("click", () => {
   window.location.href = window.location.href;
 });
 
+/**
+ * Function that automaticlly resizes textearea if it's necessary
+ * @param {string} element textarea from HTML
+ */
 function auto_grow(element) {
   element.style.height = "5px";
   element.style.height = (element.scrollHeight) + "px";
