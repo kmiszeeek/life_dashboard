@@ -194,8 +194,21 @@ select {
   flex-direction: column;
 }
 
+.notes {
+  margin-top: 3%;
+  margin-bottom: 10%;
+  width: 100%;
+  padding: 1.5% 2.5% 1.5% 2.5%;
+  background-color: #fff;
+  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+}
+
 .tasks > nav,
-.reminders > nav {
+.reminders > nav,
+.notes > nav {
   display: flex;
   justify-content: space-between;
   font-weight: 500;

@@ -164,12 +164,15 @@ document.getElementById("submitTask").addEventListener("click", () => {
   localStorage.setItem(document.getElementById("taskName").value, document.getElementById("checkboxTask").checked ? "true" : "false");
 });
 
+document.getElementById("textArea").addEventListener("change", () => {
+  localStorage.setItem("note123456789", document.getElementById("textArea").value);
+});
 
 let tasks = JSON.stringify(localStorage);
 
 let tasksList = document.getElementById("tasks");
 
-if (window.localStorage.length == 0) {
+if (window.localStorage.length == 0 || (window.localStorage.length == 1 && localStorage.key(0) == "note123456789")) {
   tasksList.innerHTML += `<p class="free">You are free today!</p>`;
 } else {
   for (let i = 0; i < localStorage.length; i++) {
@@ -216,20 +219,3 @@ function auto_grow(element) {
   element.style.height = "5px";
   element.style.height = (element.scrollHeight) + "px";
 }
-
-document.getElementById("textArea").addEventListener("change", () => {
-  localStorage.setItem("note123456789", document.getElementById("textArea").value);
-});
-
-
-// const cats = [
-//   {id : "1", name : "jon doe"},
-//   {id : "2", name : "john deere"},
-// ]
-
-// localStorage.setItem("cats", JSON.stringify(cats));
-// const cat2 = localStorage.getItem('cats');
-// localStorage.removeItem('cat2');
-// localStorage.clear();
-
-// console.log(cats);
