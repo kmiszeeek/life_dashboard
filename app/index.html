@@ -51,12 +51,11 @@
     
       </section>
       <section class="right">
-        <div class="reminders">
+        <div class="reminders" id="reminders">
           <nav>
             <h3>Reminders</h3>
-            <a href="#promptTaskOverlay" class="plus">+</a>
+            <a href="#promptReminderOverlay" class="plus">+</a>
           </nav>
-          
         </div>
       </section>
       </div>
@@ -72,7 +71,7 @@
           <div class="container2">
             <form class="promptTaskForm">
               <label for="taskName">Task name:</label><br>
-              <input type="text" placeholder="your task name" name="taskName" id="taskName"><br>
+              <input type="text" placeholder="your task name" name="taskName" id="taskName" required><br>
               <div class="checkboxFlex"><input
                   type="checkbox"
                   class="checkboxTask"
@@ -82,6 +81,25 @@
                 <p>task is important</p></div>
                 <br>
               <input type="submit" id="submitTask" class="formSubmit" value="Add new task">
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="promptOverlay" id="promptReminderOverlay">
+      <div class="promptReminder">
+        <nav>
+        <h2>Add new reminder</h2>
+        <a href="#" class="close">&times;</a>
+      </nav>
+        <div class="content">
+          <div class="container2">
+            <form class="promptReminderForm">
+              <label for="taskName">Reminder name:</label><br>
+              <input type="text" placeholder="your reminder" name="reminderName" id="reminderName" required><br>
+              <label for="taskName">Reminder date:</label><br>
+              <input type="date" name="reminderDate" id="reminderDate" required><br>
+              <input type="submit" id="submitReminder" class="formSubmit" value="Add new reminder">
             </form>
           </div>
         </div>

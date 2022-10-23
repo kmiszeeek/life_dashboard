@@ -11,6 +11,12 @@ function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
+function deleteSpecialChars(string) {
+  for (let i = 0; i < string.length(); i++) {
+
+  }
+}
+
 document.getElementById("textArea").value = localStorage.getItem('note123456789');
 
 function convertFromTimestamp(timestamp) {
@@ -161,7 +167,17 @@ document.getElementById("submitTask").addEventListener("click", () => {
   document.getElementById("promptTaskOverlay").style.opacity = 0;
 
   window.history.pushState("", "", '/app/index.html');
-  localStorage.setItem(document.getElementById("taskName").value, document.getElementById("checkboxTask").checked ? "true" : "false");
+  let name = "task_" + document.getElementById("taskName").value;
+  localStorage.setItem(name, document.getElementById("checkboxTask").checked ? "true" : "false");
+});
+
+document.getElementById("submitReminder").addEventListener("click", () => {
+  document.getElementById("promptReminderOverlay").style.visibility = "hidden";
+  document.getElementById("promptReminderOverlay").style.opacity = 0;
+
+  window.history.pushState("", "", '/app/index.html');
+  let name = "remi_" + document.getElementById("reminderName").value;
+  localStorage.setItem(name, document.getElementById("reminderDate").value);
 });
 
 document.getElementById("textArea").addEventListener("change", () => {
@@ -169,17 +185,27 @@ document.getElementById("textArea").addEventListener("change", () => {
 });
 
 let tasks = JSON.stringify(localStorage);
-
 let tasksList = document.getElementById("tasks");
+let remindersList = document.getElementById("reminders");
 
-if (window.localStorage.length == 0 || (window.localStorage.length == 1 && localStorage.key(0) == "note123456789")) {
+let checkTasks = false;
+let checkReminders = false;
+for (let i = 0; i < localStorage.length; i++) {
+  if (localStorage.key(i).slice(0, 5) == "task_")
+    checkTasks = true;
+  if (localStorage.key(i).slice(0, 5) == "remi_")
+    checkReminders = true;
+}
+
+
+if (checkTasks == false) {
   tasksList.innerHTML += `<p class="free">You are free today!</p>`;
 } else {
   for (let i = 0; i < localStorage.length; i++) {
-    if (localStorage.getItem(localStorage.key(i)) == "true" && localStorage.key(i) != "note123456789") {
+    if (localStorage.getItem(localStorage.key(i)) == "true" && localStorage.key(i).slice(0, 5) == "task_") {
       tasksList.innerHTML += `
       <div class="task">
-        <p>${localStorage.key(i)}</p>
+        <p>${localStorage.key(i).slice(5)}</p>
         <div class="taskOptions">
           <span class="exclamation">!</span>
           <input
@@ -191,10 +217,10 @@ if (window.localStorage.length == 0 || (window.localStorage.length == 1 && local
           <img src="./resources/trash.png" width="26px" class="trash" name="${localStorage.key(i)}" id="trashTask">
         </div>
       </div>`
-    } else if (localStorage.key(i) != "note123456789") {
+    } else if (localStorage.key(i).slice(0, 5) == "task_") {
       tasksList.innerHTML += `
       <div class="task">
-        <p>${localStorage.key(i)}</p>
+        <p>${localStorage.key(i).slice(5)}</p>
         <div class="taskOptions">
           <span class="exclamationFalse">!</span>
           <input
@@ -210,8 +236,75 @@ if (window.localStorage.length == 0 || (window.localStorage.length == 1 && local
   }
 }
 
+function changeDateFormat(date) {
+  date = date.slice(5);
+  result = "";
+  result = date[3] + date[4] + "-" + date[0] + date[1];
+  return result;
+}
+
+let temp = new Date();
+let tempYear = temp.getFullYear();
+let tempMonth = temp.getMonth();
+let tempDay = temp.getDate();
+
+console.log(new Date(localStorage.getItem(localStorage.key(3))));
+console.log(new Date(tempYear, tempMonth, tempDay, 2));
+
+if (checkReminders == false) {
+  console.log("trashReminder");
+  remindersList.innerHTML += `<p class="free">You have no reminders!</p>`;
+} else {
+  for (let i = 0; i < localStorage.length; i++) {
+    if (localStorage.key(i).slice(0, 5) == "remi_") {
+      let temp = new Date();
+      let temp2 = new Date(localStorage.getItem(localStorage.key(i)));
+      let sameDay = false;
+      if (temp.getFullYear() == temp2.getFullYear() && temp.getMonth() == temp2.getMonth() && temp.getDate() == temp2.getDate()) {
+        sameDay = true;
+      }
+      console.log(sameDay);
+      if (new Date(localStorage.getItem(localStorage.key(i))) < new Date() && !sameDay) {
+        remindersList.innerHTML += `
+        <div class="task">
+        <p>${localStorage.key(i).slice(5)}</p>
+        <div class="reminderOptions">
+        <p class="expired">${changeDateFormat(localStorage.getItem(localStorage.key(i)))}</p>
+        <img src="./resources/trash.png" width="26px" class="trash" name="${localStorage.key(i)}" id="trashReminder">
+        </div>
+        </div>`
+      }
+      if (sameDay) {
+        remindersList.innerHTML += `
+        <div class="task">
+        <p>${localStorage.key(i).slice(5)}</p>
+        <div class="reminderOptions">
+        <p class="remindtoday">${changeDateFormat(localStorage.getItem(localStorage.key(i)))}</p>
+        <img src="./resources/trash.png" width="26px" class="trash" name="${localStorage.key(i)}" id="trashReminder">
+        </div>
+        </div>`
+      }
+      if (new Date(localStorage.getItem(localStorage.key(i))) > new Date()) {
+        remindersList.innerHTML += `
+        <div class="task">
+        <p>${localStorage.key(i).slice(5)}</p>
+        <div class="reminderOptions">
+        <p class="notexpired">${changeDateFormat(localStorage.getItem(localStorage.key(i)))}</p>
+        <img src="./resources/trash.png" width="26px" class="trash" name="${localStorage.key(i)}" id="trashReminder">
+        </div>
+        </div>`
+      }
+    }
+  }
+}
+
 document.getElementById("trashTask").addEventListener("click", () => {
   localStorage.removeItem(document.getElementById("trashTask").name);
+  window.location.href = window.location.href;
+});
+
+document.getElementById("trashReminder").addEventListener("click", () => {
+  localStorage.removeItem(document.getElementById("trashReminder").name);
   window.location.href = window.location.href;
 });
 

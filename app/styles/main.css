@@ -236,7 +236,14 @@ select {
   display: flex;
   justify-content: space-between;
   justify-items: center;
+  align-items: center;
+}
 
+.reminderOptions {
+  width: 120px;
+  display: flex;
+  justify-content: space-between;
+  justify-items: center;
   align-items: center;
 }
 
@@ -297,7 +304,8 @@ select {
   opacity: 1;
 }
 
-.promptTasks {
+.promptTasks,
+.promptReminder {
   background: #f5efe6;
   font-family: inter;
   width: 800px;
@@ -306,8 +314,11 @@ select {
   padding: 1%;
   border-radius: 5px;
 }
-
-.promptTasks > nav {
+.promptReminder {
+  height: 380px;
+}
+.promptTasks > nav,
+.promptReminder > nav {
   display: flex;
   justify-content: space-between;
   font-weight: lighter;
@@ -329,16 +340,31 @@ label {
   font-size: 24px;
 }
 
-.promptTaskForm {
+.promptTaskForm,
+.promptReminderForm {
   margin-left: 2%;
   margin-right: 2%;
   height: 100%;
   display: flex;
   flex-direction: column;
 }
-.promptTaskForm > #taskName {
+
+.promptTaskForm > #taskName,
+.promptReminderForm > #reminderName {
   height: 45px;
   padding-left: 2%;
+  font-size: 18px;
+  border: 1px solid #c1c1c1;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 5px;
+}
+
+.promptReminderForm > #reminderDate {
+  height: 45px;
+  width: 200px;
+  padding-left: 2%;
+  padding-right: 2%;
+  right: 2%;
   font-size: 18px;
   border: 1px solid #c1c1c1;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -371,7 +397,8 @@ label {
   cursor: pointer;
 }
 
-.free {
+.free,
+.noreminders {
   width: 100%;
   margin-top: 2%;
   margin-bottom: 2%;
@@ -392,4 +419,21 @@ label {
   min-height: 100px;
   padding: 1%;
   padding-bottom: 2%;
+  border: 0;
+}
+
+#textArea:target {
+  border: 1px;
+}
+
+.expired {
+  color: #ff0000;
+  font-weight: 600;
+}
+.remindtoday {
+  color: #ffc700;
+  font-weight: 600;
+}
+.notexpired {
+  font-weight: 600;
 }
