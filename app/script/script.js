@@ -48,11 +48,7 @@ document.getElementById("citiesSelect").addEventListener("change", () => {
 async function getWeather(city) {
   const result = await fetch(
     `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=56e1b69633d0faa92c0b2d5121e0c2b1&units=metric&mode=json`
-  );
-
-  // const forecast = await fetch(
-  //   `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=56e1b69633d0faa92c0b2d5121e0c2b1&units=metric&mode=json`
-  // );
+    );
   const data = await result.json();
 
   document.getElementById("citiesSelect").value = data.name;
@@ -120,9 +116,7 @@ function getDateAndTime() {
     "December",
   ];
   let month = monthNames[time.getMonth()];
-
   let year = time.getFullYear();
-
   if (hours < 10) hours = "0" + hours;
   if (minutes < 10) minutes = "0" + minutes;
   if (seconds < 10) seconds = "0" + seconds;

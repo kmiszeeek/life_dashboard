@@ -441,3 +441,15 @@ label {
 .notexpired {
   font-weight: 600;
 }
+
+.logo {
+  width: 100%;
+  height: 270px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.logo >h2 {
+  font-size: 50px;
+}
