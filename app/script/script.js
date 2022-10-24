@@ -166,7 +166,7 @@ function displayCalendar() {
 }
 
 getWeather(city);
-setInterval(getDateAndTime, 10);
+setInterval(getDateAndTime, 1);
 displayCalendar();
 
 document.getElementById("submitTask").addEventListener("click", () => {
@@ -184,7 +184,10 @@ document.getElementById("submitReminder").addEventListener("click", () => {
 
   window.history.pushState("", "", '/app/index.html');
   let name = "remi_" + document.getElementById("reminderName").value;
-  localStorage.setItem(name, document.getElementById("reminderDate").value);
+  if(document.getElementById("reminderName").value != "" || document.getElementById("reminderDate").value != "")
+    localStorage.setItem(name, document.getElementById("reminderDate").value);
+  else 
+    alert("Wypełnij wszystkie pola!");
 });
 
 document.getElementById("textArea").addEventListener("change", () => {
@@ -221,7 +224,7 @@ if (checkTasks == false) {
             id="checkbox"
             name="checkbox"
           />
-          <img src="./resources/trash.png" width="26px" class="trash" name="${localStorage.key(i)}" id="trashTask">
+          <img src="./resources/trash.png" width="26px" class="trash" name="${localStorage.key(i)}" id="trashTask" onclick="deleteTask()">
         </div>
       </div>`
     } else if (localStorage.key(i).slice(0, 5) == "task_") {
@@ -236,7 +239,7 @@ if (checkTasks == false) {
             id="checkbox"
             name="checkbox"
           />
-          <img src="./resources/trash.png" width="26px" class="trash" name="${localStorage.key(i)}" id="trashTask">
+          <img src="./resources/trash.png" width="26px" class="trash" name="${localStorage.key(i)}" id="trashTask" onclick="deleteTask()">
         </div>
       </div>`
     }
@@ -273,7 +276,7 @@ if (checkReminders == false) {
         <p>${localStorage.key(i).slice(5)}</p>
         <div class="reminderOptions">
         <p class="expired">${changeDateFormat(localStorage.getItem(localStorage.key(i)))}</p>
-        <img src="./resources/trash.png" width="26px" class="trash" name="${localStorage.key(i)}" id="trashReminder">
+        <img src="./resources/trash.png" width="26px" class="trash" name="${localStorage.key(i)}" id="deleteReminder">
         </div>
         </div>`
       }
@@ -283,7 +286,7 @@ if (checkReminders == false) {
         <p>${localStorage.key(i).slice(5)}</p>
         <div class="reminderOptions">
         <p class="remindtoday">${changeDateFormat(localStorage.getItem(localStorage.key(i)))}</p>
-        <img src="./resources/trash.png" width="26px" class="trash" name="${localStorage.key(i)}" id="trashReminder">
+        <img src="./resources/trash.png" width="26px" class="trash" name="${localStorage.key(i)}" id="deleteReminder">
         </div>
         </div>`
       }
@@ -293,7 +296,7 @@ if (checkReminders == false) {
         <p>${localStorage.key(i).slice(5)}</p>
         <div class="reminderOptions">
         <p class="notexpired">${changeDateFormat(localStorage.getItem(localStorage.key(i)))}</p>
-        <img src="./resources/trash.png" width="26px" class="trash" name="${localStorage.key(i)}" id="trashReminder">
+        <img src="./resources/trash.png" width="26px" class="trash" name="${localStorage.key(i)}" id="deleteReminder">
         </div>
         </div>`
       }
@@ -301,15 +304,16 @@ if (checkReminders == false) {
   }
 }
 
-document.getElementById("trashTask").addEventListener("click", () => {
-  localStorage.removeItem(document.getElementById("trashTask").name);
+document.getElementById("deleteReminder").addEventListener("click", () => {
+  localStorage.removeItem(document.getElementById("deleteReminder").name);
   window.location.href = window.location.href;
 });
 
-document.getElementById("trashReminder").addEventListener("click", () => {
-  localStorage.removeItem(document.getElementById("trashReminder").name);
+async function deleteTask() {
+  localStorage.removeItem(document.getElementById("trashTask").name);
   window.location.href = window.location.href;
-});
+}
+
 
 /**
  * Function that automaticlly resizes textearea if it's necessary
